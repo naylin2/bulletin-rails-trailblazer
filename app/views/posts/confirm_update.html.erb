@@ -1,9 +1,9 @@
-<h1>New Post</h1>
+<h1>Confirm Post Edit</h1>
 
-<%= form_with model: @post, url: confirm_create_posts_path(@post) do |form| %>
+<%= form_with model: @post do |form| %>
   <div>
     <%= form.label :title %><br>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, readonly: 'true' %>
     <% @post.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
@@ -11,13 +11,14 @@
 
   <div>
     <%= form.label :description %><br>
-    <%= form.text_area :description %><br>
+    <%= form.text_area :description, readonly: 'true' %><br>
     <% @post.errors.full_messages_for(:description).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
   <div>
-    <%= form.submit "Done" %>
+    <%= form.submit "Confirm" %>
+    <%= link_to "Cancel", 'javascript:history.go(-1);' %>
   </div>
 <% end %>

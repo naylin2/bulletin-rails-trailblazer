@@ -35,14 +35,17 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def edit
-    @post = Post.find(params[:id])
+  def confirm_update
+    @post = Post.new(post_update_params)
+    unless @post.valid?
+        render :edit
+    end
   end
 
   def update
     @post = Post.find(params[:id])
 
-    if @post.update(post_params)
+    if @post.update(post_update_params)
       redirect_to @post
     else
       render :edit
@@ -58,6 +61,10 @@ class PostsController < ApplicationController
 
   private
     def post_params
+      params.require(:post).permit(:title, :description)
+    end
+
+    def post_update_params
       params.require(:post).permit(:title, :description)
     end
 
