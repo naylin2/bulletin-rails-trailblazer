@@ -5,8 +5,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :name, unique: true, null: false
       t.string :email, unique: true, null: false
       t.text :password_digest, null: false
-      t.string :profile, null: false, limit: 255
-      t.string :type, null: false, limit: 1
+      t.string :profile, limit: 255
+      t.string :role, null: false, limit: 1
       t.string :phone, limit: 20
       t.string :address, limit: 255
       t.date :dob

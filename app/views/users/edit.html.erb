@@ -1,0 +1,62 @@
+<h1>Edit User</h1>
+
+<div><%= image_tag @user.profile, style: 'width:100px;' %> </div>
+<%= form_with model: @user do |form| %>
+
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <div>
+      <%= form.label :email_address %>
+      <%= form.text_field :email %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <div>
+      <%= form.label :Role %>
+      <%= form.select(:role, options_for_select([0,1], selected: @user.role.to_i) )%>
+    </div>
+  
+    <div>
+      <%= form.label :phone %>
+      <%= form.text_field :phone %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <div>
+      <%= form.label :date_of_birth %>
+      <%= form.date_field :dob %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <div>
+      <%= form.label :address %>
+      <%= form.text_area :address %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+      <div>
+      <%= form.label :profile %>
+      <%= form.file_field :profile, :accept => "image/x-png,image/gif,image/jpeg" %>
+      <% @user.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  
+    <%= form.submit "Done" %>
+    <%= link_to "Back", 'javascript:history.go(-1);' %>
+    
+  <% end %>
