@@ -1,70 +1,75 @@
 <h1>Create New User</h1>
-<%= form_with model: @user, url: confirm_create_users_path(@user) do |form| %>
+<%= form_with model: @user do |form| %>
 
     <div>
       <%= form.label :name %>
       <%= form.text_field :name %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:name].any? %>
+        <span style="color:red;">Name <%= @user.errors[:name][0] %>
       <% end %>
     </div>
   
     <div>
       <%= form.label :email_address %>
       <%= form.text_field :email %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:email].any? %>
+        <span style="color:red;">Email <%= @user.errors[:email][0] %>
       <% end %>
     </div>
   
     <div>
       <%= form.label :password %>
       <%= form.password_field :password %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:password].any? %>
+        <span style="color:red;">Passsword <%= @user.errors[:password][0] %>
       <% end %>
     </div>
   
     <div>
       <%= form.label :confirm_password %>
       <%= form.password_field :password_confirmation %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:password_confirmation].any? %>
+        <span style="color:red;">Passsword Confirmation <%= @user.errors[:password_confirmation][0] %>
       <% end %>
     </div>
-  
+
+    <% if admin? %>
+
     <div>
       <%= form.label :Role %>
       <%= form.select(:role, options_for_select([0,1]))%>
     </div>
+
+    <% end %>
+
   
     <div>
       <%= form.label :phone %>
       <%= form.text_field :phone %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:phone].any? %>
+        <span style="color:red;">phone <%= @user.errors[:phone][0] %>
       <% end %>
     </div>
   
     <div>
       <%= form.label :date_of_birth %>
       <%= form.date_field :dob %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:dob].any? %>
+        <span style="color:red;">Date Of Birth <%= @user.errors[:dob][0] %>
       <% end %>
     </div>
   
     <div>
       <%= form.label :address %>
       <%= form.text_area :address %>
-      <% @user.errors.full_messages_for(:title).each do |message| %>
-        <div><%= message %></div>
+      <% if @user.errors[:address].any? %>
+        <span style="color:red;">Address <%= @user.errors[:address][0] %>
       <% end %>
     </div>
   
       <div>
       <%= form.label :profile %>
-      <%= form.file_field :profile, direct_upload: true, :accept => "image/x-png,image/gif,image/jpeg" %>
+      <%= form.file_field :profile, :accept => "image/x-png,image/gif,image/jpeg" %>
       <% @user.errors.full_messages_for(:title).each do |message| %>
         <div><%= message %></div>
       <% end %>

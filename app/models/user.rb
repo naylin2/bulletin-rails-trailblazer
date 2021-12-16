@@ -3,6 +3,8 @@ class User < ApplicationRecord
      has_secure_password
      # validates email
      validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
+     validates :password, confirmation: true, presence: true,on: :create
+     validates :name, :profile, presence: true
      # soft-delete
      acts_as_paranoid
      # image

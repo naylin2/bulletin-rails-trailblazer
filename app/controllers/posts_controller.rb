@@ -1,4 +1,8 @@
 class PostsController < ApplicationController
+
+  skip_before_action :authorized, only: [:index, :show]
+  skip_before_action :AdminAuthorized, except: []
+
   def index
     @posts = Post.all
   end

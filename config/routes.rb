@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
-  root "posts#index"
-  # get '/posts', to:"posts#index"
-  # get '/posts/new', to:"posts#new", as: 'new_post'
-  # post '/posts', to:"posts#create", as: 'create_post'
-  # get '/posts/:id', to:"posts#show", as: 'post'
-  # patch '/posts/:id', to:"posts#update", as: 'update_post'
-  # delete '/posts/:id', to:"posts#destroy"
-  # get '/posts/:id/edit', to:"posts#edit", as: 'edit_post'
 
+  root "sessions#welcome"
+
+  # for posts
   resources :posts do
     collection do
       get :confirm_create, to: "posts#new"
@@ -20,6 +15,7 @@ Rails.application.routes.draw do
     end
   end
   
+  # for users
   resources :users do
     collection do
       post :confirm_create
@@ -35,6 +31,18 @@ Rails.application.routes.draw do
       post :update_password
     end
   end
+
+  # for login
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/login'
+  get 'sessions/welcome'
+
+  get 'login', to: 'sessions#new'
+  get 'logout', to: 'sessions#log_out'
+  post 'login', to: 'sessions#create'
+  get 'welcome', to: 'sessions#welcome'
+  get 'authorized', to: 'sessions#page_requires_login'
 
 
 end

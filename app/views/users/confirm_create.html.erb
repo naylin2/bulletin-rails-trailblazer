@@ -65,7 +65,7 @@
     <div><%= image_tag @user.profile, style: 'width:100px;' %> </div>
       <div>
       <%= form.label :profile %>
-      <%= form.text_field :profile, value: @user.profile, :readonly => true %>
+      <%= form.hidden_field :profile, value: @user.profile, :readonly => true %>
       <% @user.errors.full_messages_for(:title).each do |message| %>
         <div><%= message %></div>
       <% end %>

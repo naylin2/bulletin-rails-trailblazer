@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+
+  skip_before_action :authorized, only: [:new, :create]
+  skip_before_action :AdminAuthorized, except: [:destroy, :index]
+
     def index
         @users = User.all
     end
@@ -20,11 +24,19 @@ class UsersController < ApplicationController
   
     def create
       @user = User.new(user_params)
+      @user.role ||= 1;
+      if current_user.present?
+      @user.create_user_id = current_user.id
+      @user.updated_user_id = current_user.id
+      else
       @user.create_user_id = 1
       @user.updated_user_id = 1
+      end
+      
   
       if @user.save
-        redirect_to @user
+        session[:user_id] = @user.id
+        redirect_to '/welcome'
       else
         render :new
       end
@@ -43,6 +55,7 @@ class UsersController < ApplicationController
   
     def update
       @user = User.find(params[:id])
+      @user.updated_user_id = current_user.id
   
       if @user.update(user_update_params)
         redirect_to @user
