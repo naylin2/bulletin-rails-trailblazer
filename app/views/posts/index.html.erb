@@ -1,34 +1,39 @@
-<h1>Posts</h1>
+<h1 class="float-left">Posts</h1>
 
-<table>
+<%= link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right' %>
 
-<tr>
-<th>Title</th>
-<th>Description</th>
-<th>User ID</th>
-<th>Created At</th>
-<th>Operations</th>
-</tr>
+<div class="table-responsive">
+<table  id="table_id" class="table">
 
-<tr>
-<% @posts.each do |post| %>
+<thead>
+    <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>User ID</th>
+    <th>Created At</th>
+    <th>Operations</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <% @posts.each do |post| %>
 
 
-    <td> <%= link_to post.title, post %> </td>
-    <td> <%= post.description %> </td>
-    <td> <%= post.create_user_id %> </td>
-    <td> <%= post.created_at %> </td>
-    <td>
-    <%= link_to "Edit", edit_post_path(post.id) %>
-    <%= link_to "Delete", post_path(post.id),
-    method: :delete,
-    data: { confirm: "Are you sure?" } %>
-    </td>
+        <td> <%= link_to post.title, post %> </td>
+        <td> <%= post.description %> </td>
+        <td> <%= post.create_user_id %> </td>
+        <td> <%= post.created_at %> </td>
+        <td>
+        <%= link_to "Edit", edit_post_path(post.id), class: 'btn button1 mr-2' %>
+        <%= link_to "Delete", post_path(post.id), class: 'btn button1 button2',
+        method: :delete,
+        data: { confirm: "Are you sure?" } %>
+        </td>
 
     </tr>
-
-<% end %>
+    <% end %>
+</tbody>
 
 </table>
-<br><br>
-<%= link_to "New Post", new_post_path %>
+</div>
+

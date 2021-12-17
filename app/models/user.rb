@@ -9,4 +9,6 @@ class User < ApplicationRecord
      acts_as_paranoid
      # image
      has_one_attached :profile
+     # to check old password with new password
+     attr_accessor :old_password
 end

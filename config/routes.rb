@@ -44,5 +44,9 @@ Rails.application.routes.draw do
   get 'welcome', to: 'sessions#welcome'
   get 'authorized', to: 'sessions#page_requires_login'
 
+  # for password reset
+  get 'password', to: 'passwords#edit', as: 'edit_password'
+  post 'password', to: 'passwords#update'
+
 
 end

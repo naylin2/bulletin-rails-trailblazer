@@ -1,42 +1,49 @@
-<h1>Users</h1>
+<h1 class="float-left">Users</h1>
 
-<table>
+<%= link_to "New User", new_user_path, class: 'btn button1 mv-20 float-right' %>
 
-<tr>
-<th>Id</th>
-<th>Name</th>
-<th>Email</th>
-<th>Created User</th>
-<th>Type</th>
-<th>Phone</th>
-<th>DOB</th>
-<th>Address</th>
-<th>Operations</th>
-</tr>
+<table id="table_id" class="table">
 
-<tr>
-<% @users.each do |user| %>
-
-
-    <td> <%= user.id %> </td>
-    <td> <%= link_to user.name, user %> </td>
-    <td> <%= user.email %> </td>
-    <td> <%= user.create_user_id %> </td>
-    <td> <%= user.role %> </td>
-    <td> <%= user.phone %> </td>
-    <td> <%= user.dob %> </td>
-    <td> <%= user.address %> </td>
-    <td>
-    <%= link_to "Delete", user_path(user.id),
-    method: :delete,
-    data: { confirm: "Are you sure?" } %>
-    </td>
-
+<thead>
+    <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created User</th>
+    <th>Type</th>
+    <th>Phone</th>
+    <th>DOB</th>
+    <th>Address</th>
+    <th>Operations</th>
     </tr>
+</thead>
 
-<% end %>
+<tbody>
+    <tr>
+    <% @users.each do |user| %>
+
+
+        <td> <%= user.id %> </td>
+        <td> <%= link_to user.name, user %> </td>
+        <td> <%= user.email %> </td>
+        <td> <%= user.create_user_id %> </td>
+        <td> <%= user.role %> </td>
+        <td> <%= user.phone %> </td>
+        <td> <%= user.dob %> </td>
+        <td> <%= user.address %> </td>
+        <td>
+        <%= link_to "Delete", user_path(user.id), class: 'btn button1 button2',
+        method: :delete,
+        data: { confirm: "Are you sure?" } %>
+        </td>
+
+        </tr>
+
+    <% end %>
+</tbody>
+
+
 
 </table>
 
-<br><br>
-<%= link_to "New User", new_user_path %>
+

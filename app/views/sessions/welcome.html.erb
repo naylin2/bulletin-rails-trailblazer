@@ -1,18 +1,21 @@
+
+<div class="card">
+
 <h1>Welcome</h1>
 
-
 <% if logged_in? %>
-    <h1>You are Logged In, <%= current_user.name %></h1>
+    <h4><%= current_user.name %></h4>
 <% else %>
-<%= button_to "Login", '/login', method: :get%>
-<%= button_to "Sign Up", '/users/new', method: :get%>
+<%= button_to "Login", '/login', method: :get, class: 'btn button1 mv-20' %>
+<%= button_to "Sign Up", '/users/new', method: :get, class: 'btn button1 mv-20'%>
 <% end %>
 
-
 <% if admin? %>
-    <h1>Your an Admin.</h1>
+    <h5>Your an Admin.</h5>
 <%end%>
 
 <% if user? %>
-    <h3>Your an User.</h3>
+    <h5>Your an User.</h5>
 <%end%>
+
+</div>
