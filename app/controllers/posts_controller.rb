@@ -25,11 +25,11 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.status = 1
-    @post.create_user_id = 1
-    @post.updated_user_id = 1
+    @post.create_user_id = current_user.id
+    @post.updated_user_id = current_user.id
 
     if @post.save
-      redirect_to @post
+      redirect_to posts_path, notice: :POST_CREATED
     else
       render :new
     end
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.destroy
 
-    redirect_to root_path
+    redirect_to posts_path, notice: :POST_DELETED
   end
 
   private

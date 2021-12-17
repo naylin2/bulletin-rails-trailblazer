@@ -28,6 +28,11 @@
     margin: 0 auto;
   }
 
+  .form-wrapper{
+    width: 50%;
+    margin: 0 auto;
+  }
+
   h1{
     padding: 10px 0;
   }
@@ -59,6 +64,11 @@
     color: #fff;
   }
 
+  .blue{
+    background: #3d61d9;
+    color: #fff;
+  }
+
   .card{
     text-align: center;
     padding: 20px;
@@ -79,6 +89,9 @@
     <%= render 'layouts/header' %>
   <% end %>
   <div class="wrapper">
+    <% if notice %>
+      <%= render 'layouts/alerts' %>
+    <% end %>
     <%= yield %>
   </div>
   </body>
@@ -88,4 +101,5 @@
 $(document).ready( function () {
     $('#table_id').DataTable();
 } );
+
 </script>

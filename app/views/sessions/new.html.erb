@@ -1,8 +1,11 @@
+<div class="form-group form-wrapper">
 <h1>Login</h1>
    <%= form_tag '/login' do %>
-   <%= label_tag :email%>
+   <%= label_tag :email %>
    <%= text_field_tag :email %>
    <%= label_tag :password%>
-   <%= password_field_tag :password%>
+   <%= password_field_tag :password %>
    <%= submit_tag "Login"%>
+   <%= link_to 'Forget Password?', password_reset_path %>
 <%end%>
+</div>

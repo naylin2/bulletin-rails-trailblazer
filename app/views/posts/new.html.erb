@@ -1,23 +1,25 @@
-<h1>New Post</h1>
-
 <%= form_with model: @post, url: confirm_create_posts_path(@post) do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-    <% @post.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+  
+  <div class="form-group form-wrapper">
+    <h1>New Post</h1>
+    <div>
+      <%= form.label :title, class:" col-form-label" %><br>
+      <%= form.text_field :title, class:"form-control" %>
+      <% @post.errors.full_messages_for(:title).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %><br>
-    <% @post.errors.full_messages_for(:description).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div>
+      <%= form.label :description, class:" col-form-label" %><br>
+      <%= form.text_area :description, class:"form-control" %><br>
+      <% @post.errors.full_messages_for(:description).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.submit "Done" %>
+    <div>
+      <%= form.submit "Done", class:"btn button1 mv-20" %>
+    </div>
   </div>
 <% end %>
