@@ -8,7 +8,7 @@ class PasswordsController < ApplicationController
     def update
         if current_user.authenticate(password_params[:old_password])
             if current_user.update(password_params)
-                redirect_to root_path
+                redirect_to root_path, notice: "Your password has been changed."
             else
             render :edit
             end
@@ -24,8 +24,11 @@ class PasswordsController < ApplicationController
         @user = User.find_by(email: params[:email])
         if @user.present?
             PasswordMailer.with(user: @user).reset.deliver_now
-            redirect_to root_path, notice: "We have sent a link to resend a password."
+            redirect_to root_path, notice: "We have sent a link to reset a password."
+        else
+            redirect_to password_reset_path, notice: "No account with this email exists."
         end
+
     end
 
     def editReset
@@ -48,6 +51,6 @@ class PasswordsController < ApplicationController
         params.permit(:old_password, :password, :password_confirmation)
     end
     def reset_password_params
-        params.permit(:password, :password_confirmation)
+        params.require(:user).permit(:password, :password_confirmation)
     end
 end

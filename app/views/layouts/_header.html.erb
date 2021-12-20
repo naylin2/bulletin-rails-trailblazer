@@ -1,6 +1,6 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-<%= link_to "OJT", root_path , class:"navbar-brand" %>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+<%= link_to "OJT", root_path , class:"navbar-brand text-light" %>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -9,23 +9,23 @@
   <ul class="navbar-nav mr-auto">
       <% if admin? %>
       <li class="nav-item">
-          <%= link_to "User List", users_path , class:"nav-link" %>
+          <%= link_to "User List", users_path , class:"nav-link text-light" %>
       </li>
       <% end %>
       <li class="nav-item">
-          <%= link_to "Post List", posts_path , class:"nav-link" %>
+          <%= link_to "Post List", posts_path , class:"nav-link text-light" %>
       </li>          
   </ul>
   <ul class="navbar-nav my-sm-0">
   <% if admin? %>
     <li class="nav-item">
-      <%= link_to "Create User", new_user_path , class:"nav-link" %>
+      <%= link_to "Create User", new_user_path , class:"nav-link text-light" %>
     </li>
   <% end %>
     <li class="nav-item">
     <div class="dropdown show">
       <% if current_user.present? %>
-        <a class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle text-light" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_user.name %>
         </a>
 

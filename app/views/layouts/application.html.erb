@@ -49,10 +49,17 @@
     margin: 0 0 20px 0;
   }
 
+  .mr-5{
+    margin-right: 5px;
+  }
+
+  .mv-r-20{
+    margin: 20px 5px 20px 0;
+  }
+
   .button1{
     background: #3d61d9;
     color: #fff;
-    border-radius: 8px;
   }
 
   .button2{
@@ -62,6 +69,10 @@
   .button1:hover{
     opacity: .7;
     color: #fff;
+  }
+
+  .btn-wid{
+    width: 50%;
   }
 
   .blue{
@@ -88,12 +99,16 @@
   <% if logged_in? %>
     <%= render 'layouts/header' %>
   <% end %>
+  <% if notice %>
+    <%= render 'layouts/alerts' %>
+  <% end %>
   <div class="wrapper">
-    <% if notice %>
-      <%= render 'layouts/alerts' %>
-    <% end %>
-    <%= yield %>
+  <%= yield %>
   </div>
+  
+  <% if logged_in? %>
+  <%= render 'layouts/footer' %>
+  <% end %>
   </body>
 </html>
 

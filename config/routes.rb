@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     collection do
       get :confirm_create, to: "posts#new"
       post :confirm_create
+      get :upload_csv
+      post :import_csv
+      get :download
     end
     member do
       get :confirm_update, to: "posts#confirm_update"

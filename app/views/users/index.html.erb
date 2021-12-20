@@ -1,7 +1,4 @@
 <h1 class="float-left">Users</h1>
-
-<%= link_to "New User", new_user_path, class: 'btn button1 mv-20 float-right' %>
-
 <table id="table_id" class="table">
 
 <thead>
@@ -14,7 +11,10 @@
     <th>Phone</th>
     <th>DOB</th>
     <th>Address</th>
+    
+    <% if admin? %>
     <th>Operations</th>
+    <% end %>
     </tr>
 </thead>
 
@@ -24,26 +24,31 @@
 
 
         <td> <%= user.id %> </td>
-        <td> <%= link_to user.name, user %> </td>
+        <td><%= link_to user.name, user_path(user), {:remote => true, 'data-toggle' =>  "modal"} %></td>
         <td> <%= user.email %> </td>
         <td> <%= user.create_user_id %> </td>
         <td> <%= user.role %> </td>
         <td> <%= user.phone %> </td>
         <td> <%= user.dob %> </td>
         <td> <%= user.address %> </td>
+        
+        <% if admin? %>
         <td>
         <%= link_to "Delete", user_path(user.id), class: 'btn button1 button2',
         method: :delete,
         data: { confirm: "Are you sure?" } %>
         </td>
+        <% end %>
 
         </tr>
 
     <% end %>
 </tbody>
-
-
-
 </table>
+<div id="userDetail" class="modal fade" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:700px"></div>
+  </div>
+</div>
 
 

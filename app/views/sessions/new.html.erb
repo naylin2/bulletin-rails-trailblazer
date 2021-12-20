@@ -1,11 +1,16 @@
-<div class="form-group form-wrapper">
+<div class="card">
+<div class="form-group">
 <h1>Login</h1>
-   <%= form_tag '/login' do %>
-   <%= label_tag :email %>
-   <%= text_field_tag :email %>
-   <%= label_tag :password%>
-   <%= password_field_tag :password %>
-   <%= submit_tag "Login"%>
-   <%= link_to 'Forget Password?', password_reset_path %>
+<%= form_with url: login_path do |form| %>
+   <%= form.text_field :email, class: "form-control mv-20", placeholder: "Email" %>
+   <%= form.password_field :password, class: "form-control", placeholder: "Password" %>
+   
+   <div class="custom-control custom-checkbox mv-20">
+   <%= check_box_tag :remember_me, 1, params[:remember_me], class: "custom-control-input", id: "remember-me", name: "remember_me" %>
+   <label class="custom-control-label" for="remember-me">Remember me?</label>
+</div>
+   <%= form.submit "Login", class: "btn button1" %>
 <%end%>
+</div>
+<%= link_to 'Forget Password?', password_reset_path %>
 </div>

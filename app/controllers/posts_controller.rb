@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     @post.updated_user_id = current_user.id
 
     if @post.save
-      redirect_to posts_path, notice: :POST_CREATED
+      redirect_to posts_path, notice: "Post Created!"
     else
       render :new
     end
@@ -48,9 +48,10 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+    @post.updated_user_id = current_user.id
 
     if @post.update(post_update_params)
-      redirect_to @post
+      redirect_to @post, notice: "Post Updated!"
     else
       render :edit
     end
@@ -60,7 +61,33 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @post.destroy
 
-    redirect_to posts_path, notice: :POST_DELETED
+    redirect_to posts_path, notice: "Post deleted!"
+  end
+
+  def download
+    @posts = Post.all
+    respond_to do |format|
+        format.html
+        format.csv { send_data @posts.to_csv,  :filename => "Post List.csv" }
+      end
+  end
+
+  def import_csv
+      updated_user_id = current_user.id
+      create_user_id = current_user.id
+      if (params[:file].nil?)
+          redirect_to upload_csv_posts_path, notice: "Require File"        
+      elsif !File.extname(params[:file]).eql?(".csv")
+          redirect_to upload_csv_posts_path, notice: "Wrong File Type"  
+      else
+          error_msg = PostsHelper.check_header(["title", "description", "status"],params[:file])
+          if error_msg.present?
+              redirect_to upload_csv_posts_path, notice: error_msg
+          else 
+              Post.import(params[:file],create_user_id,updated_user_id)
+              redirect_to posts_path, notice: "Imported Successfully!"
+          end
+      end
   end
 
   private
@@ -69,7 +96,7 @@ class PostsController < ApplicationController
     end
 
     def post_update_params
-      params.require(:post).permit(:title, :description)
+      params.require(:post).permit(:title, :description, :status)
     end
 
 end
