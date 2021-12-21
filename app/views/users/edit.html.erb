@@ -20,10 +20,14 @@
         <% end %>
       </div>
     
+      <% if admin? %>
+
       <div>
         <%= form.label :Role, class:" col-form-label" %>
         <%= form.select(:role, options_for_select([0,1], selected: @user.role.to_i) )%>
       </div>
+      
+      <% end %>
     
       <div>
         <%= form.label :phone, class:" col-form-label" %>

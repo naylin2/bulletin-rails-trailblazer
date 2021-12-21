@@ -61,14 +61,18 @@ ActiveRecord::Schema.define(version: 2021_12_15_064148) do
     t.string "phone", limit: 20
     t.string "address"
     t.date "dob"
-    t.integer "create_user_id", null: false
-    t.integer "updated_user_id", null: false
+    t.bigint "create_user_id", null: false
+    t.bigint "updated_user_id", null: false
     t.integer "deleted_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.index ["create_user_id"], name: "fk_rails_bc60bf1428"
+    t.index ["updated_user_id"], name: "fk_rails_562ffc0a48"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "users", "users", column: "create_user_id"
+  add_foreign_key "users", "users", column: "updated_user_id"
 end

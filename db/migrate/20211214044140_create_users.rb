@@ -10,8 +10,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :phone, limit: 20
       t.string :address, limit: 255
       t.date :dob
-      t.integer :create_user_id, null: false
-      t.integer :updated_user_id, null: false
+      t.bigint :create_user_id, null: false
+      t.bigint :updated_user_id, null: false
       t.integer :deleted_user_id
       
       t.datetime :created_at, null: false

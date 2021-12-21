@@ -1,4 +1,4 @@
-<div class="float-none">
+<div class="not-card not-card1">
 <h1 class="float-left">Posts</h1>
 
 <%= link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right' %>
@@ -7,7 +7,6 @@
     
     <%= link_to "Upload", upload_csv_posts_path, class: 'btn btn-dark float-right mv-r-20' %>
 <% end %>
-</div>
 
 
 
@@ -18,7 +17,7 @@
     <tr>
     <th>Title</th>
     <th>Description</th>
-    <th>User ID</th>
+    <th>Posted User</th>
     <th>Created At</th>
     <th>Operations</th>
     </tr>
@@ -30,12 +29,15 @@
 
         <td><%= link_to post.title, post_path(post), {:remote => true, 'data-toggle' =>  "modal"} %></td>
         <td> <%= post.description %> </td>
-        <td> <%= post.create_user_id %> </td>
+        <td> <%= post.created_user.name %> </td>
         <td> <%= post.created_at.strftime('%Y/%m/%d') %> </td>
+        
+        <% if current_user.name == post.created_user.name || admin? %>
         <td>
         <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark mr-2' %>
         <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}",:class=>'btn button1 button2' %></td>
         </td>
+        <% end %>
         
         <div class="modal fade" id="deletepost_<%= post.id %>">
             <div class="modal-dialog">
@@ -64,6 +66,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="width:700px"></div>
   </div>
+</div>
 </div>
 
 
