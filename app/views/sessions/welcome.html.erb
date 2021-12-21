@@ -6,11 +6,11 @@
     <h4><%= current_user.name %></h4>
 
     <% if admin? %>
-        <h5>Your an Admin.</h5>
+        <h5>Your an <span class= "text-success"> Admin </span>.</h5>
     <%end%>
     
     <% if user? %>
-        <h5>Your an User.</h5>
+        <h5>Your an <span class= "text-info"> User </span>.</h5>
     <%end%>
     </div>
 

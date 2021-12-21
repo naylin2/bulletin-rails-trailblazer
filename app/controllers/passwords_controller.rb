@@ -10,10 +10,10 @@ class PasswordsController < ApplicationController
             if current_user.update(password_params)
                 redirect_to root_path, notice: "Your password has been changed."
             else
-            render :edit
+                redirect_to password_path, notice: "Something went wrong."
             end
         else
-            render :edit
+            redirect_to password_path, notice: "Your old password is wrong!"
         end
     end
 
