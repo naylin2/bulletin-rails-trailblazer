@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
 
-
   skip_before_action :authorized, only: [:new, :create, :welcome]
   skip_before_action :AdminAuthorized, except: [:page_requires_login]
 
@@ -39,3 +38,4 @@ class SessionsController < ApplicationController
     redirect_to '/welcome'
   end
 end
+

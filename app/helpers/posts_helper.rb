@@ -12,3 +12,4 @@ module PostsHelper
       return error_msg
     end
 end
+

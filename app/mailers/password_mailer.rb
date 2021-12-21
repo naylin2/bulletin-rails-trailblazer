@@ -6,3 +6,4 @@ class PasswordMailer < ApplicationMailer
     mail to: params[:user].email
   end
 end
+

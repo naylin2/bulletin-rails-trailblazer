@@ -33,7 +33,6 @@ class UsersController < ApplicationController
       @user.updated_user_id = 1
       end
       
-  
       if @user.save
         session[:user_id] = @user.id
         redirect_to '/welcome'
@@ -71,7 +70,6 @@ class UsersController < ApplicationController
       redirect_to users_path
     end
     
-
     private
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :profile, :create_user_id, :updated_user_id)
@@ -80,3 +78,4 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :profile, :updated_user_id)
     end
 end
+

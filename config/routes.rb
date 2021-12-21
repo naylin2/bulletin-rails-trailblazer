@@ -55,7 +55,4 @@ Rails.application.routes.draw do
   post 'password/reset', to: 'passwords#create'
   get 'password/reset/edit', to: 'passwords#editReset'
   patch 'password/reset/edit', to: 'passwords#updateReset'
-
-
-
 end
