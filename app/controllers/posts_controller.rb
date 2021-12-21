@@ -4,7 +4,11 @@ class PostsController < ApplicationController
   skip_before_action :AdminAuthorized, except: []
 
   def index
+    if admin?
     @posts = Post.all
+    else
+    @posts = Post.where(create_user_id: current_user.id)
+    end
   end
 
   def show
