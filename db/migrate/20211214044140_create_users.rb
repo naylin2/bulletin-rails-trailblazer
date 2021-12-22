@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
-
       t.string :name, unique: true, null: false
       t.string :email, unique: true, null: false
       t.text :password_digest, null: false
@@ -13,7 +14,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.bigint :create_user_id, null: false
       t.bigint :updated_user_id, null: false
       t.integer :deleted_user_id
-      
+
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false
       t.datetime :deleted_at

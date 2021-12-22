@@ -1,0 +1,9 @@
+.form-group.form-wrapper
+  h1 New Post
+  =form_for model do |f|
+    .mv-20
+      =f.text_field :title, placeholder: "Title", class:"form-control"
+    .mv-20
+      =f.text_area :description, placeholder: "Say it out loud!", class:"form-control"
+    .div
+      =f.submit 'Create Post', class:"btn button1 mv-20"

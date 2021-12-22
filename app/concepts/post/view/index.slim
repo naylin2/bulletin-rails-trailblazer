@@ -1,72 +1,28 @@
-<div class="not-card not-card1">
-<h1 class="float-left">Posts</h1>
+.not-card.not-card1
+  h1.float-left Posts
+  ==link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right'
+  ==link_to "Download", download_posts_path(format: :csv), class: 'btn button1 button2 float-right mv-r-20'
+  ==link_to "Upload", upload_csv_posts_path, class: 'btn btn-dark float-right mv-r-20'
 
-<%= link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right' %>
-<% if admin? %>
-    <%= link_to "Download", download_posts_path(format: :csv), class: 'btn button1 button2  float-right mv-r-20' %>
-    
-    <%= link_to "Upload", upload_csv_posts_path, class: 'btn btn-dark float-right mv-r-20' %>
-<% end %>
-
-
-
-<div class="table-responsive">
-<table  id="table_id" class="table">
-
-<thead>
-    <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Posted User</th>
-    <th>Created At</th>
-    <th>Operations</th>
-    </tr>
-</thead>
-<tbody>
-    <tr>
-    <% @posts.each do |post| %>
-
-
-        <td><%= link_to post.title, post_path(post), {:remote => true, 'data-toggle' =>  "modal"} %></td>
-        <td> <%= post.description %> </td>
-        <td> <%= post.created_user.name %> </td>
-        <td> <%= post.created_at.strftime('%Y/%m/%d') %> </td>
-        
-        <% if current_user.name == post.created_user.name || admin? %>
-        <td>
-        <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark mr-2' %>
-        <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}",:class=>'btn button1 button2' %></td>
-        </td>
-        <% end %>
-        
-        <div class="modal fade" id="deletepost_<%= post.id %>">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-            <h5 class="modal-title">Post Detete Confirmation</h5>
-                </div>
-                <div class="modal-body">
-                <p>Are you sure to delete?</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" data-dismiss="modal" class="btn button1">Cancel</a>
-                    <%= link_to 'Delete', post_path(post), method: :delete, :class => 'btn button1 button2' %>
-                </div>
-            </div>
-            </div>
-        </div>
-
-    </tr>
-    <% end %>
-</tbody>
-
-</table>
-</div>
-<div id="postDetail" class="modal fade" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="width:700px"></div>
-  </div>
-</div>
-</div>
-
-
+  table#table_id.table
+      thead
+          tr
+              th Title
+              th Description
+              th Posted User
+              th Created At
+              th Operations
+      tbody
+          - model.each do |post|
+            tr
+                td 
+                    ==link_to post.title, post_path(post)
+                td 
+                    ==post.description
+                td 
+                    ==post.created_user.name
+                td 
+                    ==post.created_at.strftime("%Y/%m/%d %I:%M:%S %p " )
+                td              
+                    ==link_to "Edit", edit_post_path(post), class: "btn btn-dark mr-2"
+                    ==link_to 'Delete', post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn button1 button2"

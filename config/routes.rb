@@ -1,35 +1,36 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
-  root "sessions#welcome"
+Rails.application.routes.draw do
+  root 'sessions#welcome'
 
   # for posts
   resources :posts do
     collection do
-      get :confirm_create, to: "posts#new"
+      get :confirm_create, to: 'posts#new'
       post :confirm_create
       get :upload_csv
       post :import_csv
       get :download
     end
     member do
-      get :confirm_update, to: "posts#confirm_update"
+      get :confirm_update, to: 'posts#confirm_update'
       post :confirm_update
       post :update_post
     end
   end
-  
+
   # for users
   resources :users do
     collection do
       post :confirm_create
-      get :confirm_create, to: "users#new"
+      get :confirm_create, to: 'users#new'
       get :search_user
     end
     member do
-      get :profile, to: "users#profile"
-      get :edit_profile, to: "users#edit_profile"
+      get :profile, to: 'users#profile'
+      get :edit_profile, to: 'users#edit_profile'
       post :update_profile
-      get :update_profile, to: "users#edit_profile"
+      get :update_profile, to: 'users#edit_profile'
       get :change_password
       post :update_password
     end

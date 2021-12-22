@@ -1,0 +1,54 @@
+.not-card.not-card2
+
+  h1 Post Detail
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Title:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.title
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Description:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.description
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Status:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.status == 1  ? 'Active' : 'Inactive'
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Posted at:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.created_at.strftime('%Y/%m/%d')
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Posted User:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.created_user.name
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Updated at:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.updated_at.strftime('%Y/%m/%d')
+
+  .form-group.row
+    label.col-sm-4.col-form-label
+      strong Updated User:
+    .col-sm-8
+      label.col-sm-10.form-label
+        ==model.updated_user.name
+
+  ==link_to 'Back', posts_path, class:"btn button1 button2 mv-20"
