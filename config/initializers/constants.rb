@@ -6,5 +6,6 @@ module Constants
     'User' => '1'
   }.freeze
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-  HEADER = %w[title description status].freeze
+  POST_CSV_HEADER = %w[title description status]
+  POST_CSV_FORMAT_HEADER = %w[title description status]
 end

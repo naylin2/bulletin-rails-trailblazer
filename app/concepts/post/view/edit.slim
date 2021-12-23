@@ -1,0 +1,13 @@
+.form-group.form-wrapper
+  h1 Edit Post
+  =form_for model do |f|
+    .mv-20
+      =f.text_field :title, class:"form-control"
+    .mv-20
+      =f.text_area :description, class:"form-control"
+    .mv-20
+      .custom-switch.align-self-center
+        =f.check_box :status, class:"custom-control-input", id: "customSwitch1"
+        label.custom-control-label for="customSwitch1"  Status
+    .div
+      =f.submit 'Done', class:"btn button1 mv-20"

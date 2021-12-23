@@ -17,31 +17,27 @@ class PostsController < ApplicationController
   end
 
   def new
-    run Post::Operation::Create::Present do |result|
+    run Post::Operation::Create::Present
       render cell(Post::Cell::New, @form)
-    end
   end
 
   def create
     run Post::Operation::Create, current_user: current_user do |result|
-      redirect_to posts_path, notice: 'Post Created!'
+     return redirect_to posts_path, notice: 'Post Created!'
     end
     render cell(Post::Cell::New, @form)
   end
 
   def edit
-    @post = Post.find(params[:id])
+    run Post::Operation::Update::Present
+      render cell(Post::Cell::Edit, @form)
   end
 
   def update
-    @post = Post.find(params[:id])
-    @post.updated_user_id = current_user.id
-
-    if @post.update(post_update_params)
-      redirect_to @post, notice: 'Post Updated!'
-    else
-      render :edit
+    run Post::Operation::Update, current_user: current_user do |result|
+      return redirect_to post_path(result[:model]), notice: 'Post Updated'
     end
+    render cell(Post::Cell::Edit, @form)
   end
 
   def destroy
@@ -51,38 +47,22 @@ class PostsController < ApplicationController
   end
 
   def download
-    @posts = Post.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @posts.to_csv, filename: 'Post List.csv' }
-    end
-  end
-
-  def import_csv
-    updated_user_id = current_user.id
-    create_user_id = current_user.id
-    if params[:file].nil?
-      redirect_to upload_csv_posts_path, notice: 'Require File'
-    elsif !File.extname(params[:file]).eql?('.csv')
-      redirect_to upload_csv_posts_path, notice: 'Wrong File Type'
-    else
-      error_msg = PostsHelper.check_header(%w[title description status], params[:file])
-      if error_msg.present?
-        redirect_to upload_csv_posts_path, notice: error_msg
-      else
-        Post.import(params[:file], create_user_id, updated_user_id)
-        redirect_to posts_path, notice: 'Imported Successfully!'
+    run Post::Operation::Export::CsvData do |result|
+      respond_to do |format|
+        format.html
+        format.csv { send_data result[:csv_text],  :filename => "Post List.csv" }
       end
     end
   end
 
-  private
-
-  def post_params
-    params.require(:post).permit(:title, :description)
+  def upload_csv
+      render cell(Post::Cell::Import, @form)
   end
 
-  def post_update_params
-    params.require(:post).permit(:title, :description, :status)
+  def import_csv
+    run Post::Operation::Import, current_user_id: current_user.id do |_|
+      return redirect_to posts_path, notice: 'Imported Successfully!'
+    end
+    redirect_to upload_csv_posts_path, notice: 'Something went wrong.'
   end
 end
