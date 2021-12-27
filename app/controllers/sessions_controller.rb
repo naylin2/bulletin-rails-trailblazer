@@ -4,31 +4,32 @@ class SessionsController < ApplicationController
   skip_before_action :authorized, only: %i[new create welcome]
   skip_before_action :AdminAuthorized, except: [:page_requires_login]
 
-  def new; end
+  def new
+    run User::Operation::Login::Present
+      render cell(User::Cell::Login, @form)
+  end
 
   def create
-    @user = User.find_by(email: params[:email])
-    if @user.present?
-      if @user&.authenticate(params[:password])
-        cookies.signed[:user_id] = if params[:remember_me]
-                                     { value: @user.id, expires: 2.weeks.from_now }
-                                   else
-                                     @user.id
-                                   end
-        redirect_to '/welcome', notice: 'You have logged in successfully!'
-      else
-        redirect_to '/login', notice: 'Password is wrong!'
+    run User::Operation::Login do |result|
+      cookies.signed[:user_id] = result[:user][:id]
+      redirect_to '/welcome', notice: 'You have logged in successfully!'
+      return
+    end
+    if result.failure?
+      if result[:email_pwd_fail]
+        redirect_to login_path, notice: "Invalid Password!"
+        return
       end
-    else
-      redirect_to '/login', notice: "Email doesn't exist!"
+      if result[:user_fail]
+        redirect_to login_path, notice: "Email does not exist!"
+      else
+        redirect_to login_path, notice: "Something went wrong!"
+        return
+      end
     end
   end
 
-  def login; end
-
   def welcome; end
-
-  def page_requires_login; end
 
   def log_out
     cookies.delete :user_id
