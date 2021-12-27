@@ -5,7 +5,9 @@ class UsersController < ApplicationController
   skip_before_action :AdminAuthorized, except: %i[destroy index]
 
   def index
-    @users = User.all
+    run User::Operation::Index, is_admin: admin? do |result|
+      render cell(User::Cell::Index, result[:users], is_admin: admin?)
+    end
   end
 
   def show
@@ -14,11 +16,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-  end
-
-  def confirm_create
-    @user = User.new(user_params)
-    render :new unless @user.valid?
   end
 
   def create
@@ -36,7 +33,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to '/welcome'
     else
-      render :new
+      render :new, notice: 'Something went wrong!'
     end
   end
 

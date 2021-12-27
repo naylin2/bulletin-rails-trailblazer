@@ -1,0 +1,38 @@
+.not-card.not-card1
+  h1.float-left Users Trailblazer
+
+  table#table_id.table
+      thead
+          tr
+              th Id
+              th Name
+              th Email
+              th Created User
+              th Type
+              th Phone
+              th DOB
+              th Address
+              - if admin?
+              th Operations
+      tbody
+          - model.each do |user|
+            tr
+                td 
+                    ==user.id
+                td 
+                    ==link_to user.name, user_path(user)
+                td 
+                    ==user.email
+                td 
+                    ==user.created_user.name
+                td 
+                    ==user.role == "0" ? 'Admin' : 'User'
+                td 
+                    ==user.phone
+                td 
+                    ==user.dob
+                td 
+                    ==user.address    
+                - if admin?
+                td              
+                    ==link_to 'Delete', user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn button1 button2"

@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     run Post::Operation::Create, current_user: current_user do |result|
      return redirect_to posts_path, notice: 'Post Created!'
     end
-    render cell(Post::Cell::New, @form)
+    render cell(Post::Cell::New, @form), notice: 'Something went wrong!'
   end
 
   def edit
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
     run Post::Operation::Update, current_user: current_user do |result|
       return redirect_to post_path(result[:model]), notice: 'Post Updated'
     end
-    render cell(Post::Cell::Edit, @form)
+    render cell(Post::Cell::Edit, @form), notice: 'Something went wrong!'
   end
 
   def destroy
