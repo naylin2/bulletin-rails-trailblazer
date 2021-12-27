@@ -1,0 +1,61 @@
+.wrapper.not-card.not-card1
+  h1.mv-20 User Detail
+  .row
+    .col-4
+      .form-group
+        .img.text-center.mv-20.profile
+           ==image
+        .mv-20.text-center
+          p = link_to "Edit", edit_user_path(model), class: 'btn button1 btn-wid'
+          p = link_to "Change Password", edit_password_path(model), class: 'btn button1 button2 btn-wid'
+    .col-8
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Name:
+        .col-sm-8
+          ==model.name
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Type:
+        .col-sm-8
+          ==model.role == "0" ? 'Admin' : 'User'
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Email:
+        .col-sm-8
+          ==model.email
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Phone:
+        .col-sm-8
+          ==model.phone
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Date of Birth:
+        .col-sm-8
+          ==model.dob
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Address:
+        .col-sm-8
+          ==model.address
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Created Date:
+        .col-sm-8
+          ==model.created_at.strftime('%Y/%m/%d')
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Created User:
+        .col-sm-8
+          ==model.created_user.name
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Updated Date:
+        .col-sm-8
+          ==model.updated_at.strftime('%Y/%m/%d')
+      .form-group.row
+        label.col-sm-4.col-form-label
+          strong Updated User:
+        .col-sm-8
+          ==model.updated_user.name

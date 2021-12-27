@@ -11,67 +11,38 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    run User::Operation::Update::Present do |result|
+      render cell(User::Cell::Show, result[:model])
+    end
   end
 
   def new
-    @user = User.new
+    run User::Operation::Create::Present
+      render cell(User::Cell::New, @form, is_admin: admin?)
   end
 
   def create
-    @user = User.new(user_params)
-    @user.role ||= 1
-    if current_user.present?
-      @user.create_user_id = current_user.id
-      @user.updated_user_id = current_user.id
-    else
-      @user.create_user_id = 1
-      @user.updated_user_id = 1
+    run User::Operation::Create, current_user: current_user do |result|
+     return redirect_to users_path, notice: 'Account Created!'
     end
-
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to '/welcome'
-    else
-      render :new, notice: 'Something went wrong!'
-    end
+    render cell(User::Cell::New, @form, is_admin: admin?), notice: 'Something went wrong!'
   end
 
   def edit
-    @user = User.find(params[:id])
-  end
-
-  def confirm_update
-    @user = User.new(user_update_params)
-    render :edit unless @user.valid?
+    run User::Operation::Update::Present
+      render cell(User::Cell::Edit, @form, is_admin: admin?)
   end
 
   def update
-    @user = User.find(params[:id])
-    @user.updated_user_id = current_user.id
-
-    if @user.update(user_update_params)
-      redirect_to @user
-    else
-      render :edit
+    run User::Operation::Update, current_user: current_user do |result|
+      return redirect_to user_path(result[:model]), notice: 'Account Updated!'
     end
+    render cell(User::Cell::Edit, @form, is_admin: admin?), notice: 'Something went wrong!'
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-
-    redirect_to users_path
-  end
-
-  private
-
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address,
-                                 :profile, :create_user_id, :updated_user_id)
-  end
-
-  def user_update_params
-    params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :profile, :updated_user_id)
+    run User::Operation::Destroy do |_|
+      redirect_to users_path, notice: 'Account deleted!'
+    end
   end
 end
