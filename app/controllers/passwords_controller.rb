@@ -4,7 +4,10 @@ class PasswordsController < ApplicationController
   skip_before_action :authorized, only: %i[new create edit editReset updateReset]
   skip_before_action :AdminAuthorized, except: []
 
-  def edit; end
+  def edit
+    run Password::Operation::UpdatePassword::Present
+      render cell(Password::Cell::Edit, @form)
+  end
 
   def update
     if current_user.authenticate(password_params[:old_password])

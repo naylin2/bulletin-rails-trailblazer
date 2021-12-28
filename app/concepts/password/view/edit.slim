@@ -1,0 +1,16 @@
+.not-card.not-card2
+  =form_for model, do |f|
+    .form-group.form-wrapper
+      h1 Edit Password
+      div
+        f.label :old_password, class:" col-form-label"
+        f.password_field :old_password, class:"form-control"
+      div
+        f.label :password, class:" col-form-label"
+        f.password_field :password, class:"form-control"
+      div
+        f.label :confirm_password, class:" col-form-label"
+        f.password_field :password_confirmation, class:"form-control"
+      div
+        f.submit "Done", class: "btn button1 mv-20"
+        ==link_to "Back", 'javascript:history.go(-1);', class: "btn button1 button2 mv-20"
