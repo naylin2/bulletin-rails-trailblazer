@@ -1,6 +1,7 @@
 require 'reform/form/validation/unique_validator'
 module User::Contract
   class Update < Reform::Form
+  include Sync::SkipUnchanged
     property :name
     property :email
     property :role
@@ -17,5 +18,6 @@ module User::Contract
                       unique: true
     validates :phone, numericality: true, allow_blank: true, length: { minimum: 10, maximum: 13 }
     validates :address, length: { maximum: 255 }, allow_blank: true
+    validates :profile, length: { maximum: 255 }, allow_blank: true
   end
 end

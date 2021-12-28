@@ -6,10 +6,10 @@
 
       =f.password_field :password, class: "form-control", placeholder: "Password"
 
-      / .custom-control.custom-checkbox.mv-20
-      /   =f.check_box :remember_me, class: "custom-control-input", id: "remember-me", name: "remember_me"
-      /   =f.label:remember_me, class:"custom-control-label", for:"remember-me"
+      .custom-control.custom-checkbox.mv-20
+        =f.check_box :remember_me, class: "custom-control-input", id: "remember-me", name: "remember_me"
+        =f.label:remember_me, class:"custom-control-label", for:"remember-me"
 
       =f.submit "Login", class: "btn button1 mv-20"
     div 
-      ==link_to 'Forget Password?', password_reset_path
+      ==link_to 'Forgot Password?', password_reset_path

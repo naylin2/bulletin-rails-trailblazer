@@ -2,7 +2,7 @@ module Password::Operation
   class UpdatePassword < Trailblazer::Operation
     class Present < Trailblazer::Operation
       step :model!
-      step Contract::Build(constant: User::Contract::UpdatePassword)
+      step Contract::Build(constant: Password::Contract::UpdatePassword)
 
       def model!(options, params:, **)
         options['model'] = User.find(options['user_id'])

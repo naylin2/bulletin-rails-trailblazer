@@ -11,6 +11,9 @@ module User::Operation
     def model!(options, params:, **)
       user = User.find_by(email: params[:user][:email])
       if user.present?
+        if params[:remember_me]
+          options['remember_me'] = 1
+        end
         if user && user.authenticate(params[:user][:password])
           options['user'] = user
           true

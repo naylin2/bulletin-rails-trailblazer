@@ -26,14 +26,6 @@ Rails.application.routes.draw do
       get :confirm_create, to: 'users#new'
       get :search_user
     end
-    member do
-      get :profile, to: 'users#profile'
-      get :edit_profile, to: 'users#edit_profile'
-      post :update_profile
-      get :update_profile, to: 'users#edit_profile'
-      get :change_password
-      post :update_password
-    end
   end
 
   # for login
@@ -50,7 +42,7 @@ Rails.application.routes.draw do
 
   # for password reset
   get 'password', to: 'passwords#edit', as: 'edit_password'
-  post 'password', to: 'passwords#update'
+  patch 'password', to: 'passwords#update'
 
   get 'password/reset', to: 'passwords#new'
   post 'password/reset', to: 'passwords#create'

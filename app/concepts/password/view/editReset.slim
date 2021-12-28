@@ -1,0 +1,11 @@
+=form_for model, url: password_reset_edit_path(token: params[:token]) do |f|
+  .form-group.card 
+    h2 Reset your password
+    div 
+      =f.label :password, class:" col-form-label"
+      =f.password_field :password, class:"form-control"
+    div 
+      =f.label :confirm_password, class:" col-form-label"
+      =f.password_field :password_confirmation, class:"form-control"
+    =f.submit "Reset", class:"btn button1 mv-20"
+  

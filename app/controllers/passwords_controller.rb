@@ -5,11 +5,17 @@ class PasswordsController < ApplicationController
   skip_before_action :AdminAuthorized, except: []
 
   def edit
-    run Password::Operation::UpdatePassword::Present
-      render cell(Password::Cell::Edit, @form)
+    run Password::Operation::UpdatePassword::Present, user_id: current_user.id do |result|
+      render cell(Password::Cell::Edit, @form, user: result[:model])
+    end
   end
 
   def update
+    # run Password::Operation::UpdatePassword, user_id: current_user.id do |_|
+    #   return redirect_to root_path, notice: 'Your password has been changed.'
+    # end
+    # render cell(Password::Cell::Edit, @form)
+
     if current_user.authenticate(password_params[:old_password])
       if current_user.update(password_params)
         redirect_to root_path, notice: 'Your password has been changed.'
@@ -21,7 +27,9 @@ class PasswordsController < ApplicationController
     end
   end
 
-  def new; end
+  def new
+    render cell(Password::Cell::New, @form)
+  end
 
   def create
     @user = User.find_by(email: params[:email])

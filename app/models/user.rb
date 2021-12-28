@@ -15,4 +15,5 @@ class User < ApplicationRecord
 
   # to check old password with new password
   attr_accessor :old_password
+  attr_accessor :remember_me
 end
