@@ -1,7 +1,7 @@
 .not-card.not-card2
-  =form_for model, url: password_path do |f|
+  =form_for model, url: edit_password_path, method: :post do |f|
     .form-group.form-wrapper
-      h1 Edit Password
+      h1 Edit Password in PasswordCell
       div
         =f.label :old_password, class:" col-form-label"
         =f.password_field :old_password, class:"form-control"

@@ -1,4 +1,4 @@
-module Password::Contract
+module User::Contract
   class UpdatePassword < Reform::Form
     property :password
     property :password_confirmation, virtual: true

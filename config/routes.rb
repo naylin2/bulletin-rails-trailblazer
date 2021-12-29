@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       get :confirm_create, to: 'users#new'
       get :search_user
     end
+    member do
+    end
   end
 
   # for login
@@ -41,11 +43,12 @@ Rails.application.routes.draw do
   get 'authorized', to: 'sessions#page_requires_login'
 
   # for password reset
-  get 'password', to: 'passwords#edit', as: 'edit_password'
-  patch 'password', to: 'passwords#update'
+  get 'password/:id', to: 'passwords#edit', as: 'edit_password'
+  post 'password/:id', to: 'passwords#update'
 
-  get 'password/reset', to: 'passwords#new'
-  post 'password/reset', to: 'passwords#create'
+  get 'reset/password', to: 'passwords#new'
+  post 'reset/password', to: 'passwords#create'
   get 'password/reset/edit', to: 'passwords#editReset'
   patch 'password/reset/edit', to: 'passwords#updateReset'
+
 end

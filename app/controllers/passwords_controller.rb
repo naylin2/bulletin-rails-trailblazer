@@ -5,25 +5,20 @@ class PasswordsController < ApplicationController
   skip_before_action :AdminAuthorized, except: []
 
   def edit
-    run Password::Operation::UpdatePassword::Present, user_id: current_user.id do |result|
-      render cell(Password::Cell::Edit, @form, user: result[:model])
-    end
+    run User::Operation::UpdatePassword::Present
+      render cell(Password::Cell::Edit, @form)
   end
 
   def update
-    # run Password::Operation::UpdatePassword, user_id: current_user.id do |_|
-    #   return redirect_to root_path, notice: 'Your password has been changed.'
-    # end
-    # render cell(Password::Cell::Edit, @form)
-
     if current_user.authenticate(password_params[:old_password])
-      if current_user.update(password_params)
-        redirect_to root_path, notice: 'Your password has been changed.'
-      else
-        redirect_to password_path, notice: 'Something went wrong.'
+      run User::Operation::UpdatePassword, user_id: current_user.id do |result|
+        return redirect_to root_path, notice: 'Your password has been changed.'
+      end
+      if result.failure?
+        redirect_to edit_password_path, notice: "Something went wrong."
       end
     else
-      redirect_to password_path, notice: 'Your old password is wrong!'
+      redirect_to edit_password_path, notice: "Old password is wrong"
     end
   end
 
@@ -32,13 +27,24 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(email: params[:email])
-    if @user.present?
-      PasswordMailer.with(user: @user).reset.deliver_now
-      redirect_to root_path, notice: 'We have sent a link to reset a password.'
-    else
-      redirect_to password_reset_path, notice: 'No account with this email exists.'
+    run User::Operation::ResetPassword do |result|
+      return redirect_to root_path, notice: 'We have sent a link to reset a password.'
     end
+    if result.failure?
+      if result['fail']
+        redirect_to reset_password_path, notice: 'No account with this email exists.'
+      else
+        redirect_to reset_password_path, notice: 'Something went wrong.'
+      end
+    end
+
+    # @user = User.find_by(email: params[:email])
+    # if @user.present?
+    #   PasswordMailer.with(user: @user).reset.deliver_now
+    #   redirect_to root_path, notice: 'We have sent a link to reset a password.'
+    # else
+    #   redirect_to reset_password_path, notice: 'No account with this email exists.'
+    # end
   end
 
   def editReset
@@ -57,7 +63,7 @@ class PasswordsController < ApplicationController
   end
 
   def password_params
-    params.permit(:old_password, :password, :password_confirmation)
+    params.require(:user).permit(:old_password, :password, :password_confirmation)
   end
 
   def reset_password_params

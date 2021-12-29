@@ -295,6 +295,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
+  cells
   cells-erb
   cells-rails
   cells-slim
