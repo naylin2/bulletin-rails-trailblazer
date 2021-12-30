@@ -22,3 +22,4 @@ module Post::Contract
     end
   end
 end
+

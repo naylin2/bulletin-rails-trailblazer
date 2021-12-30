@@ -1,7 +1,7 @@
 .not-card.not-card2
   =form_for model, url: edit_password_path, method: :post do |f|
     .form-group.form-wrapper
-      h1 Edit Password in PasswordCell
+      h1 Edit Password
       div
         =f.label :old_password, class:" col-form-label"
         =f.password_field :old_password, class:"form-control"
@@ -18,3 +18,4 @@
       div
         =f.submit "Done", class: "btn button1 mv-r-20"
         ==link_to 'Back', user_path(model), class:"btn button1 button2 mv-20"
+        

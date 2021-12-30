@@ -51,7 +51,8 @@ class PasswordsController < ApplicationController
       redirect_to root_path, notice: 'Your password has been changed.'
     end
     if result.failure?
-      redirect_to reset_password_path, notice: 'Something went wrong!'
+      errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+      redirect_to reset_password_edit_path(token: result[:token]), notice: errors.join("。")
     end
   end
 

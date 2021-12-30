@@ -5,3 +5,4 @@ module User::Cell
     include ActionView::Helpers::FormHelper
   end
 end
+

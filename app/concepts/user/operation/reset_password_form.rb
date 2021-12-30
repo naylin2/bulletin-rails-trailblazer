@@ -6,6 +6,7 @@ module User::Operation
       
       def model!(options, params:, **)
         options['model'] = User.find_signed(params[:token], purpose: 'password_reset')
+        options['token'] = params[:token]
       end
     end
 
