@@ -3,7 +3,11 @@
   =form_for model do |f|
     .mv-20
       =f.text_field :title, placeholder: "Title", class:"form-control"
+      - if model.errors[:title].any?
+          .error-msg This  #{ model.errors[:title][0] }
     .mv-20
       =f.text_area :description, placeholder: "Say it out loud!", class:"form-control"
+      - if model.errors[:description].any?
+          .error-msg This  #{ model.errors[:description][0] }
     .div
       =f.submit 'Create Post', class:"btn button1 mv-20"

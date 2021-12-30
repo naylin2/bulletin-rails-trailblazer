@@ -25,6 +25,7 @@ class UsersController < ApplicationController
     run User::Operation::Create, current_user: current_user do |result|
      return redirect_to users_path, notice: 'Account Created!'
     end
+    run User::Operation::Create::Present
     render cell(User::Cell::New, @form, is_admin: admin?), notice: 'Something went wrong!'
   end
 

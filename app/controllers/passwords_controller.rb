@@ -15,7 +15,8 @@ class PasswordsController < ApplicationController
         return redirect_to root_path, notice: 'Your password has been changed.'
       end
       if result.failure?
-        redirect_to edit_password_path, notice: "Something went wrong."
+        errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+        redirect_to edit_password_path, notice: errors.join("。")
       end
     else
       redirect_to edit_password_path, notice: "Old password is wrong"
@@ -31,42 +32,30 @@ class PasswordsController < ApplicationController
       return redirect_to root_path, notice: 'We have sent a link to reset a password.'
     end
     if result.failure?
-      if result['fail']
+      if result[:fail]
         redirect_to reset_password_path, notice: 'No account with this email exists.'
       else
         redirect_to reset_password_path, notice: 'Something went wrong.'
       end
     end
-
-    # @user = User.find_by(email: params[:email])
-    # if @user.present?
-    #   PasswordMailer.with(user: @user).reset.deliver_now
-    #   redirect_to root_path, notice: 'We have sent a link to reset a password.'
-    # else
-    #   redirect_to reset_password_path, notice: 'No account with this email exists.'
-    # end
   end
 
   def editReset
-    @user = User.find_signed!(params[:token], purpose: 'password_reset')
-  rescue ActiveSupport::MessageVerifier::InvalidSignature
-    redirect_to root_path, notice: 'Your token has expired.'
+    run User::Operation::ResetPasswordForm::Present do |result|
+      render cell(Password::Cell::Reset, @form)
+    end
   end
 
   def updateReset
-    @user = User.find_signed(params[:token], purpose: 'password_reset')
-    if @user.update(reset_password_params)
+    run User::Operation::ResetPasswordForm do |result|
       redirect_to root_path, notice: 'Your password has been changed.'
-    else
-      render editReset
+    end
+    if result.failure?
+      redirect_to reset_password_path, notice: 'Something went wrong!'
     end
   end
 
   def password_params
     params.require(:user).permit(:old_password, :password, :password_confirmation)
-  end
-
-  def reset_password_params
-    params.require(:user).permit(:password, :password_confirmation)
   end
 end

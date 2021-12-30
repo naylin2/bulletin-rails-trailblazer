@@ -1,11 +1,15 @@
-=form_for model, url: password_reset_edit_path(token: params[:token]) do |f|
+=form_for model, url: reset_password_edit_path(token: params[:token]) do |f|
   .form-group.card 
     h2 Reset your password
     div 
       =f.label :password, class:" col-form-label"
       =f.password_field :password, class:"form-control"
+      - if model.errors[:password].any?
+          .error-msg This  #{ model.errors[:password][0] }
     div 
       =f.label :confirm_password, class:" col-form-label"
       =f.password_field :password_confirmation, class:"form-control"
+      - if model.errors[:password_confirmation].any?
+          .error-msg This  #{ model.errors[:password_confirmation][0] }
     =f.submit "Reset", class:"btn button1 mv-20"
   
