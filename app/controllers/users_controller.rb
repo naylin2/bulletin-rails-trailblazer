@@ -17,16 +17,32 @@ class UsersController < ApplicationController
   end
 
   def new
-    run User::Operation::Create::Present
-      render cell(User::Cell::New, @form, is_admin: admin?)
+    if logged_in?
+      run User::Operation::Create::Present
+        render cell(User::Cell::New, @form, is_admin: admin?)
+    else
+      run User::Operation::Signup::Present
+        render cell(User::Cell::Signup, @form)
+    end
   end
 
   def create
-    run User::Operation::Create, current_user: current_user do |result|
-     return redirect_to users_path, notice: 'Account Created!'
+    if logged_in?
+      run User::Operation::Create, current_user: current_user do |result|
+      return redirect_to users_path, notice: 'Account Created!'
+      end
+      if result.failure?
+        errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+        redirect_to new_user_path(@form), notice: errors.join("。")
+      end
+      # render cell(User::Cell::New, @form), notice: 'Something went wrong!'
+    else
+      run User::Operation::Signup do |result|
+        return redirect_to welcome_path, notice: 'Account Created!'
+      end
+      byebug
+      render cell(User::Cell::Signup, @form), notice: 'Something went wrong!'
     end
-    run User::Operation::Create::Present
-    render cell(User::Cell::New, @form, is_admin: admin?), notice: 'Something went wrong!'
   end
 
   def edit
@@ -38,7 +54,10 @@ class UsersController < ApplicationController
     run User::Operation::Update, current_user: current_user do |result|
       return redirect_to user_path(result[:model]), notice: 'Account Updated!'
     end
-    render cell(User::Cell::Edit, @form, is_admin: admin?), notice: 'Something went wrong!'
+    if result.failure?
+      errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+      redirect_to edit_user_path(params[:id]), notice: errors.join("。")
+    end
   end
 
   def destroy

@@ -10,6 +10,9 @@
         =f.check_box :remember_me, class: "custom-control-input", id: "remember-me", name: "remember_me"
         =f.label:remember_me, class:"custom-control-label", for:"remember-me"
 
-      =f.submit "Login", class: "btn button1 mv-20"
+      =f.submit "Login", class: "btn button1"
+    .mv-20
+      span No account?
+      ==link_to ' Create new here.', new_user_path
     div 
       ==link_to 'Forgot Password?', reset_password_path

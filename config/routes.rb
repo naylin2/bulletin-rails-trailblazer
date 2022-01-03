@@ -6,15 +6,11 @@ Rails.application.routes.draw do
   # for posts
   resources :posts do
     collection do
-      get :confirm_create, to: 'posts#new'
-      post :confirm_create
       get :upload_csv
       post :import_csv
       get :download
     end
     member do
-      get :confirm_update, to: 'posts#confirm_update'
-      post :confirm_update
       post :update_post
     end
   end
@@ -22,9 +18,6 @@ Rails.application.routes.draw do
   # for users
   resources :users do
     collection do
-      post :confirm_create
-      get :confirm_create, to: 'users#new'
-      get :search_user
     end
     member do
     end

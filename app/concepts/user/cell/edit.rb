@@ -7,7 +7,9 @@ module User::Cell
       options[:is_admin]
     end
     def image
-      image_tag url_for(model.profile)
+      if model.profile.present?
+        image_tag url_for(model.profile)
+      end
     end
   end
 end

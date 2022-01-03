@@ -1,0 +1,22 @@
+.card
+  .form-group 
+    h1 Signup
+    =form_for model do |f|
+      =f.text_field :name, class: "form-control mv-20", placeholder: "Name"
+      - if model.errors[:name].any?
+          .error-msg This  #{ model.errors[:name][0] }
+      =f.text_field :email, class: "form-control mv-20", placeholder: "Email"
+      - if model.errors[:email].any?
+          .error-msg This  #{ model.errors[:email][0] }
+
+      =f.password_field :password, class: "form-control mv-20", placeholder: "Password"
+      - if model.errors[:password].any?
+          .error-msg This  #{ model.errors[:password][0] }
+      =f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password"
+      - if model.errors[:password_confirmation].any?
+          .error-msg This  #{ model.errors[:password_confirmation][0] }
+
+
+      =f.submit "Signup", class: "btn button1 mv-20"
+    div 
+      ==link_to 'Login Instead?', login_path
