@@ -6,7 +6,7 @@ module User::Contract
     property :email
     property :role
     property :phone
-    property :dob
+    property :dob, as: :date
     property :address
     property :profile
     property :create_user_id
