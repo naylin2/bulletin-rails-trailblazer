@@ -29,4 +29,12 @@ class ApplicationController < ActionController::Base
   def AdminAuthorized
     redirect_to '/welcome' unless admin?
   end
+  
+  def check_resource(resource)
+    if resource 
+      true
+    else 
+      render :file => Rails.root.join('public', '404.html'),  :status => 404
+    end
+  end
 end

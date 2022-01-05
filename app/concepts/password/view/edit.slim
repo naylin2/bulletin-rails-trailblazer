@@ -5,6 +5,8 @@
       div
         =f.label :old_password, class:" col-form-label"
         =f.password_field :old_password, class:"form-control"
+        - if model.errors[:old_password].any?
+            .error-msg This  #{ model.errors[:old_password][0] }
       div
         =f.label :password, class:" col-form-label"
         =f.password_field :password, class:"form-control"

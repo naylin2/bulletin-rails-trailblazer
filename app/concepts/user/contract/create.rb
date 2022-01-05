@@ -8,7 +8,7 @@ module User::Contract
     property :password_confirmation, virtual: true
     property :role
     property :phone
-    property :dob
+    property :dob, as: :date
     property :address
     property :profile
     property :create_user_id
@@ -22,6 +22,5 @@ module User::Contract
     validates :password_confirmation, presence: true
     validates :phone, numericality: true, length: { minimum: 10, maximum: 13 }
     validates :address, length: { maximum: 255 }
-    validates :dob, format: { with: Constants::VALID_DATE_FORMAT }
   end
 end

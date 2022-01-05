@@ -1,4 +1,4 @@
-.form-group.form-wrapper
+.form-group.form-wrapper.mb-300
   h1 Edit User
   div
     .img.mv-20.profile
@@ -7,25 +7,35 @@
     div
       =f.label :name, class:" col-form-label"
       =f.text_field :name, class:"form-control"
+      - if model.errors[:name].any?
+          .error-msg This  #{ model.errors[:name][0] }
     div
       =f.label :email, class:" col-form-label"
       =f.text_field :email, class:"form-control"
+      - if model.errors[:email].any?
+          .error-msg This  #{ model.errors[:email][0] }
     - if admin?
       div
         =f.label :role, "Role", class:" col-form-label"
-        = f.select(:role, options_for_select([0,1]))
+        = f.select(:role, options_for_select(Constants::TYPES),{}, {:class => "form-control"})
     div
       =f.label :phone, class:" col-form-label"
       =f.text_field :phone, class:"form-control"
+      - if model.errors[:phone].any?
+          .error-msg This  #{ model.errors[:phone][0] }
     div
       =f.label :date_of_birth, class:" col-form-label"
       =f.date_field :dob, class:"form-control"
+      - if model.errors[:dob].any?
+          .error-msg This  #{ model.errors[:dob][0] }
     div
       =f.label :address, class:" col-form-label"
       =f.text_area :address, class:"form-control"
+      - if model.errors[:address].any?
+          .error-msg This  #{ model.errors[:address][0] }
     div
       =f.label :profile, class:" col-form-label"
-      =f.file_field :profile, class:"form-control"
+      =f.file_field :profile, :accept => "image/x-png,image/gif,image/jpeg", class:"form-control"
     .div
       =f.submit 'Done', class:"btn button1 mv-r-20"
       ==link_to 'Back', user_path(model), class:"btn button1 button2 mv-20"

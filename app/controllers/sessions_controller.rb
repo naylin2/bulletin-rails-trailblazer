@@ -16,8 +16,7 @@ class SessionsController < ApplicationController
       else
         cookies.signed[:user_id] = result[:user][:id]
       end
-      redirect_to '/welcome', notice: 'You have logged in successfully!'
-      return
+      return redirect_to '/welcome', notice: 'You have logged in successfully!'
     end
     if result.failure?
       if result[:email_pwd_fail]
@@ -37,6 +36,7 @@ class SessionsController < ApplicationController
 
   def log_out
     cookies.delete :user_id
-    redirect_to '/welcome'
+    # redirect_to '/welcome'
+    redirect_to 'javascript:history.go(-1);'
   end
 end

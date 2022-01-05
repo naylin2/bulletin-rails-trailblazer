@@ -1,5 +1,6 @@
 module User::Contract
   class UpdatePassword < Reform::Form
+    include Sync::SkipUnchanged
     property :password
     property :password_confirmation, virtual: true
     property :old_password

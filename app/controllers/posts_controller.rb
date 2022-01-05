@@ -14,6 +14,7 @@ class PostsController < ApplicationController
     run Post::Operation::Update::Present do |result|
       render cell(Post::Cell::Show, result[:model])
     end
+    check_resource(result[:model])
   end
 
   def new
@@ -29,8 +30,10 @@ class PostsController < ApplicationController
   end
 
   def edit
-    run Post::Operation::Update::Present
+    run Post::Operation::Update::Present do |result|
       render cell(Post::Cell::Edit, @form)
+    end
+    check_resource(result[:model])
   end
 
   def update
@@ -41,9 +44,10 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    run Post::Operation::Destroy do |_|
+    run Post::Operation::Destroy, current_user: current_user do |result|
       redirect_to posts_path, notice: 'Post deleted!'
     end
+    check_resource(result[:model])
   end
 
   def download
@@ -64,5 +68,6 @@ class PostsController < ApplicationController
       return redirect_to posts_path, notice: 'Imported Successfully!'
     end
     redirect_to upload_csv_posts_path, notice: 'Something went wrong.'
+    # render cell(Post::Cell::Import, @form)
   end
 end

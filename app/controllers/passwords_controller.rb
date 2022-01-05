@@ -14,10 +14,11 @@ class PasswordsController < ApplicationController
       run User::Operation::UpdatePassword, user_id: current_user.id do |result|
         return redirect_to root_path, notice: 'Your password has been changed.'
       end
-      if result.failure?
-        errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
-        redirect_to edit_password_path, notice: errors.join("。")
-      end
+      render cell(Password::Cell::Edit, @form)
+      # if result.failure?
+      #   errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+      #   redirect_to edit_password_path, notice: errors.join("。")
+      # end
     else
       redirect_to edit_password_path, notice: "Old password is wrong"
     end
@@ -44,16 +45,16 @@ class PasswordsController < ApplicationController
     run User::Operation::ResetPasswordForm::Present do |result|
       render cell(Password::Cell::Reset, @form)
     end
+    if result.failure?
+    redirect_to root_path, notice: "Your token has expired."
+    end
   end
 
   def updateReset
     run User::Operation::ResetPasswordForm do |result|
-      redirect_to root_path, notice: 'Your password has been changed.'
+      return redirect_to root_path, notice: 'Your password has been changed.'
     end
-    if result.failure?
-      errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
-      redirect_to reset_password_edit_path(token: result[:token]), notice: errors.join("。")
-    end
+    render cell(Password::Cell::Reset, @form)
   end
 
   def password_params

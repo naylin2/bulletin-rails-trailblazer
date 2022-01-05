@@ -18,11 +18,11 @@ module User::Operation
           options['user'] = user
           true
         else
-          options['email_pwd_fail'] = 'Login fail'
+          options['email_pwd_fail'] = 'Password Wrong'
           false
         end
       else
-        options['user_fail'] = 'Login fail'
+        options['user_fail'] = 'No User'
           false
       end
     end

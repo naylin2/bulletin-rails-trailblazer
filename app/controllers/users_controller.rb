@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     run User::Operation::Update::Present do |result|
       render cell(User::Cell::Show, result[:model])
     end
+    check_resource(result[:model])
   end
 
   def new
@@ -31,38 +32,33 @@ class UsersController < ApplicationController
       run User::Operation::Create, current_user: current_user do |result|
       return redirect_to users_path, notice: 'Account Created!'
       end
-      if result.failure?
-        errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
-        redirect_to new_user_path(@form), notice: errors.join("。")
-      end
-      # render cell(User::Cell::New, @form), notice: 'Something went wrong!'
+      render cell(User::Cell::New, @form, is_admin: admin?)
     else
       run User::Operation::Signup do |result|
         return redirect_to welcome_path, notice: 'Account Created!'
       end
-      byebug
       render cell(User::Cell::Signup, @form), notice: 'Something went wrong!'
     end
   end
 
   def edit
-    run User::Operation::Update::Present
+    run User::Operation::Update::Present do |result|
       render cell(User::Cell::Edit, @form, is_admin: admin?)
+    end
+    check_resource(result[:model])
   end
 
   def update
     run User::Operation::Update, current_user: current_user do |result|
       return redirect_to user_path(result[:model]), notice: 'Account Updated!'
     end
-    if result.failure?
-      errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
-      redirect_to edit_user_path(params[:id]), notice: errors.join("。")
-    end
+    render cell(User::Cell::Edit, @form, is_admin: admin?)
   end
 
   def destroy
-    run User::Operation::Destroy do |_|
+    run User::Operation::Destroy, current_user: current_user do |result|
       redirect_to users_path, notice: 'Account deleted!'
     end
+    check_resource(result[:model])
   end
 end
