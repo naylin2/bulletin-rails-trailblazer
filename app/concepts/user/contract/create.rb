@@ -20,7 +20,8 @@ module User::Contract
                       unique: true
     validates :password, presence: true, confirmation: true
     validates :password_confirmation, presence: true
-    validates :phone, numericality: true, length: { minimum: 10, maximum: 13 }
+    validates :phone, numericality: true, length: { minimum: 10, maximum: 13 }, allow_blank: true
     validates :address, length: { maximum: 255 }
+    validates :dob, format: { with: Constants::VALID_DATE_FORMAT }, allow_blank: true
   end
 end

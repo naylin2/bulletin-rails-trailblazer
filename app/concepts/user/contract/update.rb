@@ -19,5 +19,6 @@ module User::Contract
     validates :phone, numericality: true, allow_blank: true, length: { minimum: 10, maximum: 13 }
     validates :address, length: { maximum: 255 }, allow_blank: true
     validates :profile, length: { maximum: 255 }, allow_blank: true
+    validates :dob, format: { with: Constants::VALID_DATE_FORMAT }, allow_blank: true
   end
 end
