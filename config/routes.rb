@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get :upload_csv
       post :import_csv
       get :download
+      get :search, to: "posts#search"
     end
     member do
       post :update_post
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   # for users
   resources :users do
     collection do
+      get :search, to: "users#search"
     end
     member do
     end

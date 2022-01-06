@@ -1,5 +1,12 @@
 .not-card.not-card1
-  h1.float-left Users
+  .clearfix 
+    h1.float-left Users
+  .clearfix
+    .float-left.form-outline 
+      =form_tag search_users_path, method: :get
+        = text_field_tag :search_keyword,{}, class: "form-control w-auto mv-r-20 float-left", value: last_search_keyword, placeholder: "Name or Email"
+        =submit_tag "Search", class: "btn button1 button2 mv-r-20"
+        ==link_to 'Clear', users_path, class:"btn btn-secondary mv-20"
 
   table#table_id.table
       thead

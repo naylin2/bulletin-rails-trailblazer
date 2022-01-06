@@ -4,14 +4,14 @@
     .mv-20
       =f.text_field :title, class:"form-control"
       - if model.errors[:title].any?
-          .error-msg This  #{ model.errors[:title][0] }
+          .error-msg Title  #{ model.errors[:title][0] }
     .mv-20
       =f.text_area :description, class:"form-control"
     .mv-20
       .custom-switch.align-self-center
         =f.check_box :status, class:"custom-control-input", id: "customSwitch1"
         - if model.errors[:description].any?
-            .error-msg This  #{ model.errors[:description][0] }
+            .error-msg Description  #{ model.errors[:description][0] }
         label.custom-control-label for="customSwitch1" class="mv-20" Status
     .div
       =f.submit 'Done', class:"btn button1 mv-r-20"

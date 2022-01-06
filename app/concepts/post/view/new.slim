@@ -4,11 +4,11 @@
     .mv-20
       =f.text_field :title, placeholder: "Title", class:"form-control"
       - if model.errors[:title].any?
-          .error-msg This  #{ model.errors[:title][0] }
+          .error-msg Title  #{ model.errors[:title][0] }
     .mv-20
       =f.text_area :description, placeholder: "Say it out loud!", class:"form-control"
       - if model.errors[:description].any?
-          .error-msg This  #{ model.errors[:description][0] }
+          .error-msg Description  #{ model.errors[:description][0] }
     .div
       =f.submit 'Create Post', class:"btn button1 mv-r-20"
       ==link_to 'Cancel', posts_path, class:"btn button1 button2 mv-20"

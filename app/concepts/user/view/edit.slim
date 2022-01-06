@@ -8,31 +8,31 @@
       =f.label :name, class:" col-form-label"
       =f.text_field :name, class:"form-control"
       - if model.errors[:name].any?
-          .error-msg This  #{ model.errors[:name][0] }
+          .error-msg Name  #{ model.errors[:name][0] }
     div
       =f.label :email, class:" col-form-label"
       =f.text_field :email, class:"form-control"
       - if model.errors[:email].any?
-          .error-msg This  #{ model.errors[:email][0] }
+          .error-msg Email  #{ model.errors[:email][0] }
     - if admin?
       div
         =f.label :role, "Role", class:" col-form-label"
-        = f.select(:role, options_for_select(Constants::TYPES),{}, {:class => "form-control"})
+        = f.select(:role, options_for_select(Constants::TYPES, selected: model.role.to_i),{}, {:class => "form-control"})
     div
       =f.label :phone, class:" col-form-label"
       =f.text_field :phone, class:"form-control"
       - if model.errors[:phone].any?
-          .error-msg This  #{ model.errors[:phone][0] }
+          .error-msg Phone  #{ model.errors[:phone][0] }
     div
       =f.label :date_of_birth, class:" col-form-label"
       =f.date_field :dob, class:"form-control"
       - if model.errors[:dob].any?
-          .error-msg This  #{ model.errors[:dob][0] }
+          .error-msg Date of Birth  #{ model.errors[:dob][0] }
     div
       =f.label :address, class:" col-form-label"
       =f.text_area :address, class:"form-control"
       - if model.errors[:address].any?
-          .error-msg This  #{ model.errors[:address][0] }
+          .error-msg Address  #{ model.errors[:address][0] }
     div
       =f.label :profile, class:" col-form-label"
       =f.file_field :profile, :accept => "image/x-png,image/gif,image/jpeg", class:"form-control"

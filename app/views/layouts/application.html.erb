@@ -132,6 +132,10 @@
     bottom: 0;
     position: fixed;
   }
+
+  w-aut0{
+    width: auto
+  }
   </style>
 
 
@@ -158,6 +162,13 @@
 <script>
 $(document).ready( function () {
     $('#table_id').DataTable();
-} );
+} )
+
+dataTable = $('#table_id').DataTable({
+  "searching": false,
+  "bLengthChange": false,
+  "info": false,
+})
+
 
 </script>

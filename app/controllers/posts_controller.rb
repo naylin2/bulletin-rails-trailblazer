@@ -26,7 +26,7 @@ class PostsController < ApplicationController
     run Post::Operation::Create, current_user: current_user do |result|
      return redirect_to posts_path, notice: 'Post Created!'
     end
-    render cell(Post::Cell::New, @form), notice: 'Something went wrong!'
+    render cell(Post::Cell::New, @form)
   end
 
   def edit
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
     run Post::Operation::Update, current_user: current_user do |result|
       return redirect_to post_path(result[:model]), notice: 'Post Updated'
     end
-    render cell(Post::Cell::Edit, @form), notice: 'Something went wrong!'
+    render cell(Post::Cell::Edit, @form)
   end
 
   def destroy
@@ -60,6 +60,7 @@ class PostsController < ApplicationController
   end
 
   def upload_csv
+    run Post::Operation::Import::Present
       render cell(Post::Cell::Import, @form)
   end
 
@@ -67,7 +68,14 @@ class PostsController < ApplicationController
     run Post::Operation::Import, current_user_id: current_user.id do |_|
       return redirect_to posts_path, notice: 'Imported Successfully!'
     end
-    redirect_to upload_csv_posts_path, notice: 'Something went wrong.'
-    # render cell(Post::Cell::Import, @form)
+    render cell(Post::Cell::Import, @form)
+    # errors = result["contract.default"].errors.to_hash(true).map{|k, v| v.join("。")}
+    # redirect_to upload_csv_posts_path, notice: errors.join("。")
+  end
+
+  def search
+    run Post::Operation::Search, current_user: current_user, is_admin: admin? do |result|
+      render cell(Post::Cell::Index, result[:posts], last_search_keyword: result[:last_search_keyword])
+    end
   end
 end

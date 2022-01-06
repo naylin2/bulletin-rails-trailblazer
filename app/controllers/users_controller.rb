@@ -61,4 +61,10 @@ class UsersController < ApplicationController
     end
     check_resource(result[:model])
   end
+
+  def search
+    run User::Operation::Search, is_admin: admin? do |result|
+      render cell(User::Cell::Index, result[:users], is_admin: admin?, last_search_keyword: result[:last_search_keyword])
+    end
+  end
 end

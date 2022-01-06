@@ -1,9 +1,15 @@
 .not-card.not-card1
-  h1.float-left Posts
-  ==link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right'
-  ==link_to "Download", download_posts_path(format: :csv), class: 'btn button1 button2 float-right mv-r-20'
-  ==link_to "Upload", upload_csv_posts_path, class: 'btn btn-dark float-right mv-r-20'
-
+  .clearfix
+    h1.float-left Posts
+    ==link_to "New Post", new_post_path, class: 'display btn button1 mv-20 float-right'
+    ==link_to "Download", download_posts_path(format: :csv), class: 'btn button1 button2 float-right mv-r-20'
+    ==link_to "Upload", upload_csv_posts_path, class: 'btn btn-dark float-right mv-r-20'
+  .clearfix
+    .float-left.form-outline 
+      =form_tag search_posts_path, method: :get
+        = text_field_tag :search_keyword,{}, class: "form-control w-auto mv-r-20 float-left", value: last_search_keyword, placeholder: "Title or Description"
+        =submit_tag "Search", class: "btn button1 button2 mv-r-20"
+        ==link_to 'Clear', posts_path, class:"btn btn-secondary mv-20"
   table#table_id.table
       thead
           tr

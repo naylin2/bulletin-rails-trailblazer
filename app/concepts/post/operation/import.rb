@@ -1,6 +1,9 @@
 module Post::Operation
   class Import < Trailblazer::Operation
-    step Contract::Build(constant: Post::Contract::Import)
+    class Present < Trailblazer::Operation
+      step Contract::Build(constant: Post::Contract::Import)
+    end
+    step Nested(Present)
     step Contract::Validate()
     step :import_csv!
 
@@ -16,5 +19,3 @@ module Post::Operation
     end
   end
 end
-
-    
