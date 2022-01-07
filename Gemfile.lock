@@ -114,6 +114,9 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.3)
       activesupport (>= 5.0.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -300,6 +303,7 @@ DEPENDENCIES
   cells-rails
   cells-slim
   jbuilder (~> 2.7)
+  jquery-turbolinks
   mysql2
   paranoia (~> 2.2)
   puma (~> 5.0)

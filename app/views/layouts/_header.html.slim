@@ -1,0 +1,23 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-dark.text-light
+  = link_to "OJT", root_path , class:"navbar-brand text-light"
+  .collapse.navbar-collapse id="navbarSupportedContent"
+    -if logged_in?
+      ul.navbar-nav.mr-auto
+        -if admin?
+          li.nav-item
+            = link_to "User List", users_path , class:"nav-link text-light"
+        li.nav-item 
+          = link_to "Post List", posts_path , class:"nav-link text-light"
+      ul.navbar-nav.my-sm-0
+        -if admin?
+          li.nav-item
+            = link_to "Create User", new_user_path , class:"nav-link text-light"
+        li.nav-item 
+          .dropdown.show
+            a.nav-link.dropdown-toggle.text-light role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              = current_user.name
+            .dropdown-menu aria-labelledby="dropdownMenuLink" style="left:-75px;"
+              = link_to "Profile", user_path(current_user) , class:"dropdown-item"
+              = link_to "Log Out", logout_path , class:"dropdown-item"
+          
+          

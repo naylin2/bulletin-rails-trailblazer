@@ -1,0 +1,13 @@
+-if logged_in?
+  .not-card
+    h1 Welcome 
+    h4 = current_user.name 
+    -if admin?
+      h5.text-success Admin
+    -else
+      h5.text-info User
+-else
+  .card 
+    h1 Welcome
+    = link_to "Log In", login_path, class: "btn button1 btn-wid"
+    = link_to "Sign Up", new_user_path, class: "btn button1 button2 btn-wid"
