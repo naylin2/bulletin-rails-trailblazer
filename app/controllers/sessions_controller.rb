@@ -12,9 +12,9 @@ class SessionsController < ApplicationController
   def create
     run User::Operation::Login do |result|
       if result[:remember_me]
-        cookies.signed[:user_id] = { value: result[:user][:id], expires: 2.weeks.from_now }
-      else
         cookies.signed[:user_id] = result[:user][:id]
+      else
+        cookies.signed[:user_id] = { value: result[:user][:id], expires: 2.weeks.from_now }
       end
       return redirect_to '/welcome', notice: 'You have logged in successfully!'
     end
