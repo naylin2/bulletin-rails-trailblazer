@@ -4,8 +4,7 @@ class PostsController < ApplicationController
   skip_before_action :AdminAuthorized, except: []
 
   def index
-    run Post::Operation::Index, current_user: current_user, is_admin: admin? do |result|
-    @posts = result[:posts]
+    @posts = Post.all
     end
   end
 
