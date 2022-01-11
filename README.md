@@ -1,24 +1,22 @@
 # README
+* Ruby version (3.0.3)
+* Rails version (6.1.4.4)
+* TrailBlazer code can be found in Develop Branch
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Gem Install
+* run: bundle install
 
-Things you may want to cover:
+# Project Setup
+* delete these two lines in user.rb (temporarily)
+    * belongs_to :created_user, class_name: 'User', foreign_key: 'create_user_id'
+    * belongs_to :updated_user, class_name: 'User', foreign_key: 'updated_user_id'
+* run: rails db:seed
+* add these two lines back in user.rb
+    * belongs_to :created_user, class_name: 'User', foreign_key: 'create_user_id'
+    * belongs_to :updated_user, class_name: 'User', foreign_key: 'updated_user_id'
 
-* Ruby version
+# Project Run
+* run: rails s
 
-* System dependencies
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
